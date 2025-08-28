@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Instagram Links</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --primary-color: #833AB4;
+            --secondary-color: #E1306C;
+            --accent-color: #405DE6;
+            --light-bg: #fafafa;
+            --dark-text: #262626;
+            --light-text: #8e8e8e;
+            --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--dark-text);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+            max-width: 1200px;
+            height: 90vh;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 250px;
+            background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 30px 15px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .profile {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .profile-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid white;
+            margin-bottom: 15px;
+        }
+
+        .profile h2 {
+            font-size: 1.5rem;
+            margin-bottom: 5px;
+        }
+
+        .profile p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .tabs {
+            list-style: none;
+            margin-top: 20px;
+        }
+
+        .tabs li {
+            padding: 12px 15px;
+            margin-bottom: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .tabs li i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        .tabs li:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .tabs li.active {
+            background: rgba(255, 255, 255, 0.2);
+            font-weight: 600;
+        }
+
+        .admin-panel {
+            margin-top: auto;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+        }
+
+        .admin-panel h3 {
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        .admin-btn {
+            background: white;
+            color: var(--primary-color);
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .admin-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Main Content Styles */
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: var(--dark-text);
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+        }
+
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .link-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: var(--card-shadow);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .link-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .link-image {
+            height: 160px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .link-content {
+            padding: 20px;
+        }
+
+        .link-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--dark-text);
+        }
+
+        .link-desc {
+            font-size: 0.9rem;
+            color: var(--light-text);
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .link-btn {
+            display: block;
+            text-align: center;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 10px 15px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .link-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 900px) {
+            .container {
+                flex-direction: column;
+                height: auto;
+            }
+            
+            .sidebar {
+                width: 100%;
+                padding: 20px;
+            }
+            
+            .profile {
+                display: flex;
+                align-items: center;
+                text-align: left;
+            }
+            
+            .profile-img {
+                width: 70px;
+                height: 70px;
+                margin-right: 15px;
+                margin-bottom: 0;
+            }
+            
+            .tabs {
+                display: flex;
+                overflow-x: auto;
+                margin-top: 15px;
+            }
+            
+            .tabs li {
+                margin-bottom: 0;
+                margin-right: 10px;
+                white-space: nowrap;
+            }
+            
+            .admin-panel {
+                display: none;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .links-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Sidebar with navigation tabs -->
+        <div class="sidebar">
+            <div class="profile">
+                <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=200&q=80" alt="Profile" class="profile-img">
+                <div>
+                    <h2>Alex Johnson</h2>
+                    <p>@alexjohnson</p>
+                </div>
+            </div>
+            
+            <ul class="tabs">
+                <li class="active" data-tab="links"><i class="fas fa-link"></i> My Links</li>
+                <li data-tab="projects"><i class="fas fa-briefcase"></i> Projects</li>
+                <li data-tab="social"><i class="fas fa-heart"></i> Social Media</li>
+                <li data-tab="blog"><i class="fas fa-blog"></i> Blog Posts</li>
+                <li data-tab="about"><i class="fas fa-user"></i> About Me</li>
+            </ul>
+            
+            <div class="admin-panel">
+                <h3>Admin Controls</h3>
+                <button class="admin-btn" id="adminBtn">Edit Links</button>
+            </div>
+        </div>
+        
+        <!-- Main content area with tab content -->
+        <div class="main-content">
+            <!-- Links Tab -->
+            <div class="tab-content active" id="links">
+                <h2 class="section-title">My Links</h2>
+                <div class="links-grid">
+                    <div class="link-card">
+                        <img src="https://images.unsplash.com/photo-1611605698335-8b1569810432?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80" alt="Portfolio" class="link-image">
+                        <div class="link-content">
+                            <h3 class="link-title">My Portfolio</h3>
+                            <p class="link-desc">Check out my web development projects and designs</p>
+                            <a href="#" class="link-btn">Visit Website</a>
+                        </div>
+                    </div>
+                    
+                    <div class="link-card">
+                        <img src="https://images.unsplash.com/photo-1587560699334-cc4ff634909a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80" alt="YouTube" class="link-image">
+                        <div class="link-content">
+                            <h3 class="link-title">YouTube Channel</h3>
+                            <p class="link-desc">Web development tutorials and coding tips</p>
+                            <a href="#" class="link-btn">Watch Videos</a>
+                        </div>
+                    </div>
+                    
+                    <div class="link-card">
+                        <img src="https://images.unsplash.com/photo-1611605698335-8b1569810432?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80" alt="GitHub" class="link-image">
+                        <div class="link-content">
+                            <h3 class="link-title">GitHub Profile</h3>
+                            <p class="link-desc">Explore my open-source projects and code</p>
+                            <a href="#" class="link-btn">View Code</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Projects Tab -->
+            <div class="tab-content" id="projects">
+                <h2 class="section-title">My Projects</h2>
+                <div class="links-grid">
+                    <div class="link-card">
+                        <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80" alt="E-commerce" class="link-image">
+                        <div class="link-content">
+                            <h3 class="link-title">E-commerce Website</h3>
+                            <p class="link-desc">Full-stack e-commerce solution with React and Node.js</p>
+                            <a href="#" class="link-btn">View Project</a>
+                        </div>
+                    </div>
+                    
+                    <div class="link-card">
+                        <img src="https://images.unsplash.com/photo-1559028012-481c04fa702d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=80" alt="Dashboard" class="link-image">
+                        <div class="link-content">
+                            <h3 class="link-title">Admin Dashboard</h3>
+                            <p class="link-desc">Responsive admin dashboard with analytics</p>
+                            <a href="#" class="link-btn">View Project</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Add more tab content as needed -->
+            <div class="tab-content" id="social">
+                <h2 class="section-title">Social Media</h2>
+                <p>Connect with me on social media platforms.</p>
+            </div>
+            
+            <div class="tab-content" id="blog">
+                <h2 class="section-title">Blog Posts</h2>
+                <p>Read my latest articles and blog posts.</p>
+            </div>
+            
+            <div class="tab-content" id="about">
+                <h2 class="section-title">About Me</h2>
+                <p>Learn more about my background and skills.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tab switching functionality
+            const tabs = document.querySelectorAll('.tabs li');
+            const tabContents = document.querySelectorAll('.tab-content');
+            
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const tabId = tab.getAttribute('data-tab');
+                    
+                    // Remove active class from all tabs and contents
+                    tabs.forEach(t => t.classList.remove('active'));
+                    tabContents.forEach(content => content.classList.remove('active'));
+                    
+                    // Add active class to clicked tab and corresponding content
+                    tab.classList.add('active');
+                    document.getElementById(tabId).classList.add('active');
+                });
+            });
+            
+            // Admin button functionality (for demonstration)
+            const adminBtn = document.getElementById('adminBtn');
+            adminBtn.addEventListener('click', () => {
+                alert('Admin controls activated. Only you can edit these links!');
+                // In a real implementation, this would toggle edit mode
+            });
+            
+            // Simulate loading animation
+            setTimeout(() => {
+                document.body.classList.add('loaded');
+            }, 500);
+        });
+    </script>
+</body>
+</html>
